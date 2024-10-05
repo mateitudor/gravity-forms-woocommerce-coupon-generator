@@ -59,11 +59,11 @@ function gf_nl_sub_discount_info() {
     $has_content = !empty($products_include) || !empty($products_exclude) || !empty($categories_include) || !empty($categories_exclude);
 
     if ($has_content) {
-        echo '<div class="gf_nl_sub_discount_container">';
+        echo '<div class="gfwcg-coupon-details-container">';
 
         if ( $products_include ) {
             $products_include_count = count( $products_include );
-            echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $products_include_count > 1 ? 'Produse incluse:' : 'Produs inclus:' ) . '</h4><ul class="product-list">';
+            echo '<div class="gfwcg-coupon-section gfwcg-included-products"><h4>' . ( $products_include_count > 1 ? 'Produse incluse:' : 'Produs inclus:' ) . '</h4><ul class="gfwcg-product-list">';
             foreach ( $products_include as $product_id ) {
                 $product = wc_get_product( $product_id );
                 if ( $product ) {
@@ -76,7 +76,7 @@ function gf_nl_sub_discount_info() {
 
         if ( $products_exclude ) {
             $products_exclude_count = count( $products_exclude );
-            echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $products_exclude_count > 1 ? 'Produse excluse:' : 'Produs exclus:' ) . '</h4><ul class="product-list">';
+            echo '<div class="gfwcg-coupon-section gfwcg-excluded-products"><h4>' . ( $products_exclude_count > 1 ? 'Produse excluse:' : 'Produs exclus:' ) . '</h4><ul class="gfwcg-product-list">';
             foreach ( $products_exclude as $product_id ) {
                 $product = wc_get_product( $product_id );
                 if ( $product ) {
@@ -89,7 +89,7 @@ function gf_nl_sub_discount_info() {
 
         if ( $categories_include ) {
             $categories_include_count = count( $categories_include );
-            echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $categories_include_count > 1 ? 'Categorii incluse:' : 'Categorie inclusă:' ) . '</h4><ul class="category-list">';
+            echo '<div class="gfwcg-coupon-section gfwcg-included-categories"><h4>' . ( $categories_include_count > 1 ? 'Categorii incluse:' : 'Categorie inclusă:' ) . '</h4><ul class="gfwcg-category-list">';
             foreach ( $categories_include as $category_id ) {
                 $category = get_term( $category_id, 'product_cat' );
                 if ( $category && ! is_wp_error( $category ) ) {
@@ -103,7 +103,7 @@ function gf_nl_sub_discount_info() {
 
         if ( $categories_exclude ) {
             $categories_exclude_count = count( $categories_exclude );
-            echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $categories_exclude_count > 1 ? 'Categorii excluse:' : 'Categorie exclusă:' ) . '</h4><ul class="category-list">';
+            echo '<div class="gfwcg-coupon-section gfwcg-excluded-categories"><h4>' . ( $categories_exclude_count > 1 ? 'Categorii excluse:' : 'Categorie exclusă:' ) . '</h4><ul class="gfwcg-category-list">';
             foreach ( $categories_exclude as $category_id ) {
                 $category = get_term( $category_id, 'product_cat' );
                 if ( $category && ! is_wp_error( $category ) ) {
@@ -115,7 +115,7 @@ function gf_nl_sub_discount_info() {
             echo '</ul></div>';
         }
 
-        echo '</div>'; // Close gf_nl_sub_discount_container
+        echo '</div>'; // Close gfwcg-coupon-details-container
     }
 
     return ob_get_clean();
