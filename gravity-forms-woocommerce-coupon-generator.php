@@ -41,6 +41,17 @@ function gfwcg_init() {
 // Hook to 'init' with a higher priority to ensure JetEngine is loaded
 add_action( 'init', 'gfwcg_init', 20 );
 
+// Enqueue plugin styles
+function gfwcg_enqueue_styles() {
+    wp_enqueue_style(
+        'gfwcg-main-css',
+        GFWCG_PLUGIN_URL . 'assets/css/main.min.css',
+        array(),
+        filemtime( GFWCG_PLUGIN_DIR . 'assets/css/main.min.css' )
+    );
+}
+add_action( 'wp_enqueue_scripts', 'gfwcg_enqueue_styles' );
+
 // Admin notice if required plugins are missing
 function gfwcg_admin_notice_missing_plugins() {
     echo '<div class="error"><p><strong>Gravity Forms WooCommerce Coupon Generator</strong> requires Gravity Forms and WooCommerce to be installed and active.</p></div>';
