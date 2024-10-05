@@ -56,63 +56,67 @@ function gf_nl_sub_discount_info() {
         echo '<p>Produsele aflate la reducere nu sunt excluse.</p>';
     }
 
-    echo '<div class="gf_nl_sub_discount_container">';
+    $has_content = !empty($products_include) || !empty($products_exclude) || !empty($categories_include) || !empty($categories_exclude);
 
-    if ( $products_include ) {
-        $products_include_count = count( $products_include );
-        echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $products_include_count > 1 ? 'Produse incluse:' : 'Produs inclus:' ) . '</h4><ul class="product-list">';
-        foreach ( $products_include as $product_id ) {
-            $product = wc_get_product( $product_id );
-            if ( $product ) {
-                $thumbnail = get_the_post_thumbnail( $product->get_id(), 'thumbnail' );
-                echo '<li><a href="' . get_permalink( $product->get_id() ) . '">' . $thumbnail . esc_html( $product->get_name() ) . '</a></li>';
+    if ($has_content) {
+        echo '<div class="gf_nl_sub_discount_container">';
+
+        if ( $products_include ) {
+            $products_include_count = count( $products_include );
+            echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $products_include_count > 1 ? 'Produse incluse:' : 'Produs inclus:' ) . '</h4><ul class="product-list">';
+            foreach ( $products_include as $product_id ) {
+                $product = wc_get_product( $product_id );
+                if ( $product ) {
+                    $thumbnail = get_the_post_thumbnail( $product->get_id(), 'thumbnail' );
+                    echo '<li><a href="' . get_permalink( $product->get_id() ) . '">' . $thumbnail . esc_html( $product->get_name() ) . '</a></li>';
+                }
             }
+            echo '</ul></div>';
         }
-        echo '</ul></div>';
-    }
 
-    if ( $products_exclude ) {
-        $products_exclude_count = count( $products_exclude );
-        echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $products_exclude_count > 1 ? 'Produse excluse:' : 'Produs exclus:' ) . '</h4><ul class="product-list">';
-        foreach ( $products_exclude as $product_id ) {
-            $product = wc_get_product( $product_id );
-            if ( $product ) {
-                $thumbnail = get_the_post_thumbnail( $product->get_id(), 'thumbnail' );
-                echo '<li><a href="' . get_permalink( $product->get_id() ) . '">' . $thumbnail . esc_html( $product->get_name() ) . '</a></li>';
+        if ( $products_exclude ) {
+            $products_exclude_count = count( $products_exclude );
+            echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $products_exclude_count > 1 ? 'Produse excluse:' : 'Produs exclus:' ) . '</h4><ul class="product-list">';
+            foreach ( $products_exclude as $product_id ) {
+                $product = wc_get_product( $product_id );
+                if ( $product ) {
+                    $thumbnail = get_the_post_thumbnail( $product->get_id(), 'thumbnail' );
+                    echo '<li><a href="' . get_permalink( $product->get_id() ) . '">' . $thumbnail . esc_html( $product->get_name() ) . '</a></li>';
+                }
             }
+            echo '</ul></div>';
         }
-        echo '</ul></div>';
-    }
 
-    if ( $categories_include ) {
-        $categories_include_count = count( $categories_include );
-        echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $categories_include_count > 1 ? 'Categorii incluse:' : 'Categorie inclusă:' ) . '</h4><ul class="category-list">';
-        foreach ( $categories_include as $category_id ) {
-            $category = get_term( $category_id, 'product_cat' );
-            if ( $category && ! is_wp_error( $category ) ) {
-                $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
-                $image = wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
-                echo '<li><a href="' . get_term_link( $category ) . '">' . $image . esc_html( $category->name ) . '</a></li>';
+        if ( $categories_include ) {
+            $categories_include_count = count( $categories_include );
+            echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $categories_include_count > 1 ? 'Categorii incluse:' : 'Categorie inclusă:' ) . '</h4><ul class="category-list">';
+            foreach ( $categories_include as $category_id ) {
+                $category = get_term( $category_id, 'product_cat' );
+                if ( $category && ! is_wp_error( $category ) ) {
+                    $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
+                    $image = wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
+                    echo '<li><a href="' . get_term_link( $category ) . '">' . $image . esc_html( $category->name ) . '</a></li>';
+                }
             }
+            echo '</ul></div>';
         }
-        echo '</ul></div>';
-    }
 
-    if ( $categories_exclude ) {
-        $categories_exclude_count = count( $categories_exclude );
-        echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $categories_exclude_count > 1 ? 'Categorii excluse:' : 'Categorie exclusă:' ) . '</h4><ul class="category-list">';
-        foreach ( $categories_exclude as $category_id ) {
-            $category = get_term( $category_id, 'product_cat' );
-            if ( $category && ! is_wp_error( $category ) ) {
-                $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
-                $image = wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
-                echo '<li><a href="' . get_term_link( $category ) . '">' . $image . esc_html( $category->name ) . '</a></li>';
+        if ( $categories_exclude ) {
+            $categories_exclude_count = count( $categories_exclude );
+            echo '<div class="gf_nl_sub_discount_feature"><h4>' . ( $categories_exclude_count > 1 ? 'Categorii excluse:' : 'Categorie exclusă:' ) . '</h4><ul class="category-list">';
+            foreach ( $categories_exclude as $category_id ) {
+                $category = get_term( $category_id, 'product_cat' );
+                if ( $category && ! is_wp_error( $category ) ) {
+                    $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
+                    $image = wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
+                    echo '<li><a href="' . get_term_link( $category ) . '">' . $image . esc_html( $category->name ) . '</a></li>';
+                }
             }
+            echo '</ul></div>';
         }
-        echo '</ul></div>';
-    }
 
-    echo '</div>'; // Close gf_nl_sub_discount_container
+        echo '</div>'; // Close gf_nl_sub_discount_container
+    }
 
     return ob_get_clean();
 }
