@@ -79,5 +79,3 @@ For detailed inquiries or to engage the developer for custom projects, visit htt
 ## License
 
 This plugin is freely available under a custom license humorously termed “fuck licenses,” which permits both personal and commercial use without restrictions.
-
-This README provides a comprehensive overview of your plugin, including installation instructions, usage details, shortcode explanations, and contact information for support and further engagement.
