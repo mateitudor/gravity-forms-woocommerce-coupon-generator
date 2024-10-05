@@ -1,8 +1,8 @@
-Here’s the complete and detailed README for your WordPress plugin in Markdown format:
-
 # Gravity Forms WooCommerce Coupon Generator
 
-This WordPress plugin automates the creation of WooCommerce discount coupons based on user submissions through Gravity Forms. It integrates directly with WooCommerce to apply specified discount rules dynamically, enhancing e-commerce functionalities.
+**Status** WIP
+
+This plugin automates the creation of WooCommerce discount coupons based on user submissions through Gravity Forms. It integrates directly with WooCommerce to apply specified discount rules dynamically, enhancing e-commerce functionalities.
 
 ## Features
 
@@ -52,30 +52,25 @@ With Attributes
 
 Each attribute controls a specific aspect of the coupon:
 
-	•	discount_amount (int): The amount of the discount, which could be a percentage or a fixed amount depending on discount_type.
-	•	min_spending_amount (int): Minimum spending required to use the coupon.
-	•	usage_limit (int): The maximum number of times the coupon can be used.
-	•	discount_type (string): Can be ‘percent’, ‘fixed_cart’, or ‘fixed_product’.
-	•	products_include (array): Comma-separated list of product IDs that the coupon applies to.
-	•	products_exclude (array): Comma-separated list of product IDs excluded from the discount.
-	•	categories_include (array): Comma-separated list of category IDs to include.
-	•	categories_exclude (array): Comma-separated list of category IDs to exclude.
-	•	coupon_expiry_date (string): The expiration date of the coupon (format: Y-m-d).
-	•	individual_use (bool): Whether the coupon is for individual use (cannot be used with other coupons).
-	•	exclude_sale_items (bool): Whether the coupon should be applied to items already on sale.
+- **discount_amount** (int): The amount of the discount, which could be a percentage or a fixed amount depending on discount_type.
+- **min_spending_amount** (int): Minimum spending required to use the coupon.
+- **usage_limit** (int): The maximum number of times the coupon can be used.
+- **discount_type** (string): Can be ‘percent’, ‘fixed_cart’, or ‘fixed_product’.
+- **products_include** (array): Comma-separated list of product IDs that the coupon applies to.
+- **products_exclude** (array): Comma-separated list of product IDs excluded from the discount.
+- **categories_include** (array): Comma-separated list of category IDs to include.
+- **categories_exclude** (array): Comma-separated list of category IDs to exclude.
+- **coupon_expiry_date** (string): The expiration date of the coupon (format: Y-m-d).
+- **individual_use** (bool): Whether the coupon is for individual use (cannot be used with other coupons).
+- **exclude_sale_items** (bool): Whether the coupon should be applied to items already on sale.
 
 ## Developer
 
-	•	GitHub: mateitudor
-	•	Name: Tudor Matei
-	•	Website: https://mateitudor.com
+- **GitHub** [mateitudor](https://github.com/mateitudor)
+- **Name** Tudor Matei (They/Them)
+- **Website** [https://mateitudor.com](https://mateitudor.com)
 
 ## Support
 
 For support, feature requests, or to report bugs, please use the GitHub issues page.
-
-For detailed inquiries or to engage the developer for custom projects, visit https://mateitudor.com.
-
-## License
-
-This plugin is freely available under a custom license humorously termed “fuck licenses,” which permits both personal and commercial use without restrictions.
+For detailed inquiries or to engage the developer for custom projects, visit [https://mateitudor.com](https://mateitudor.com).
