@@ -31,11 +31,11 @@ function gf_nl_sub_discount_info() {
 
     if ( $discount_amount ) {
         if ( $discount_type_value === 'percent' ) {
-            echo '<h3 class="discount-amount">Înscrie-te acum și primește ' . esc_html( $discount_amount ) . '% reducere!</h3>';
+            echo '<h3 class="discount-amount">Abonează-te acum și primești ' . esc_html( $discount_amount ) . '% reducere!</h3>';
         } elseif ( $discount_type_value === 'fixed_cart' ) {
-            echo '<h3 class="discount-amount">Înscrie-te acum și primește ' . esc_html( $discount_amount ) . ' Lei reducere pe coșul tău!</h3>';
+            echo '<h3 class="discount-amount">Abonează-te acum și primești ' . esc_html( $discount_amount ) . ' Lei reducere la coșul tău!</h3>';
         } elseif ( $discount_type_value === 'fixed_product' ) {
-            echo '<h3 class="discount-amount">Înscrie-te acum și primește ' . esc_html( $discount_amount ) . ' Lei reducere pe produs!</h3>';
+            echo '<h3 class="discount-amount">Abonează-te acum și primești ' . esc_html( $discount_amount ) . ' Lei reducere pe produs!</h3>';
         }
     }
     if ( $min_spending_amount ) {
