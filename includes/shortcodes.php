@@ -56,67 +56,88 @@ function gf_nl_sub_discount_info() {
         echo '<p>Produsele aflate la reducere nu sunt excluse.</p>';
     }
 
-    $has_content = !empty($products_include) || !empty($products_exclude) || !empty($categories_include) || !empty($categories_exclude);
+    $sections = [
+        'products_include' => [
+            'title_singular' => 'Produs inclus:',
+            'title_plural' => 'Produse incluse:',
+            'class' => 'included-products',
+            'type' => 'product'
+        ],
+        'products_exclude' => [
+            'title_singular' => 'Produs exclus:',
+            'title_plural' => 'Produse excluse:',
+            'class' => 'excluded-products',
+            'type' => 'product'
+        ],
+        'categories_include' => [
+            'title_singular' => 'Categorie inclusă:',
+            'title_plural' => 'Categorii incluse:',
+            'class' => 'included-categories',
+            'type' => 'category'
+        ],
+        'categories_exclude' => [
+            'title_singular' => 'Categorie exclusă:',
+            'title_plural' => 'Categorii excluse:',
+            'class' => 'excluded-categories',
+            'type' => 'category'
+        ]
+    ];
+
+    $has_content = false;
+
+    foreach ($sections as $var_name => $section) {
+        if (!empty($$var_name)) {
+            $has_content = true;
+            break;
+        }
+    }
 
     if ($has_content) {
         echo '<div class="gfwcg-coupon-details-container">';
 
-        if ( $products_include ) {
-            $products_include_count = count( $products_include );
-            echo '<div class="gfwcg-coupon-section gfwcg-included-products"><h4>' . ( $products_include_count > 1 ? 'Produse incluse:' : 'Produs inclus:' ) . '</h4><ul class="gfwcg-product-list">';
-            foreach ( $products_include as $product_id ) {
-                $product = wc_get_product( $product_id );
-                if ( $product ) {
-                    $thumbnail = get_the_post_thumbnail( $product->get_id(), 'thumbnail' );
-                    echo '<li><a href="' . get_permalink( $product->get_id() ) . '">' . $thumbnail . esc_html( $product->get_name() ) . '</a></li>';
-                }
+        foreach ($sections as $var_name => $section) {
+            if (!empty($$var_name)) {
+                render_section($var_name, $$var_name, $section);
             }
-            echo '</ul></div>';
-        }
-
-        if ( $products_exclude ) {
-            $products_exclude_count = count( $products_exclude );
-            echo '<div class="gfwcg-coupon-section gfwcg-excluded-products"><h4>' . ( $products_exclude_count > 1 ? 'Produse excluse:' : 'Produs exclus:' ) . '</h4><ul class="gfwcg-product-list">';
-            foreach ( $products_exclude as $product_id ) {
-                $product = wc_get_product( $product_id );
-                if ( $product ) {
-                    $thumbnail = get_the_post_thumbnail( $product->get_id(), 'thumbnail' );
-                    echo '<li><a href="' . get_permalink( $product->get_id() ) . '">' . $thumbnail . esc_html( $product->get_name() ) . '</a></li>';
-                }
-            }
-            echo '</ul></div>';
-        }
-
-        if ( $categories_include ) {
-            $categories_include_count = count( $categories_include );
-            echo '<div class="gfwcg-coupon-section gfwcg-included-categories"><h4>' . ( $categories_include_count > 1 ? 'Categorii incluse:' : 'Categorie inclusă:' ) . '</h4><ul class="gfwcg-category-list">';
-            foreach ( $categories_include as $category_id ) {
-                $category = get_term( $category_id, 'product_cat' );
-                if ( $category && ! is_wp_error( $category ) ) {
-                    $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
-                    $image = wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
-                    echo '<li><a href="' . get_term_link( $category ) . '">' . $image . esc_html( $category->name ) . '</a></li>';
-                }
-            }
-            echo '</ul></div>';
-        }
-
-        if ( $categories_exclude ) {
-            $categories_exclude_count = count( $categories_exclude );
-            echo '<div class="gfwcg-coupon-section gfwcg-excluded-categories"><h4>' . ( $categories_exclude_count > 1 ? 'Categorii excluse:' : 'Categorie exclusă:' ) . '</h4><ul class="gfwcg-category-list">';
-            foreach ( $categories_exclude as $category_id ) {
-                $category = get_term( $category_id, 'product_cat' );
-                if ( $category && ! is_wp_error( $category ) ) {
-                    $thumbnail_id = get_term_meta( $category->term_id, 'thumbnail_id', true );
-                    $image = wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
-                    echo '<li><a href="' . get_term_link( $category ) . '">' . $image . esc_html( $category->name ) . '</a></li>';
-                }
-            }
-            echo '</ul></div>';
         }
 
         echo '</div>'; // Close gfwcg-coupon-details-container
     }
 
     return ob_get_clean();
+}
+
+function render_section($var_name, $items, $section) {
+    $count = count($items);
+    $title = $count > 1 ? $section['title_plural'] : $section['title_singular'];
+    $list_class = $section['type'] === 'product' ? 'gfwcg-product-list' : 'gfwcg-category-list';
+
+    echo "<div class=\"gfwcg-coupon-section gfwcg-{$section['class']}\"><h4>{$title}</h4><ul class=\"{$list_class}\">";
+
+    foreach ($items as $item_id) {
+        if ($section['type'] === 'product') {
+            render_product($item_id);
+        } else {
+            render_category($item_id);
+        }
+    }
+
+    echo '</ul></div>';
+}
+
+function render_product($product_id) {
+    $product = wc_get_product($product_id);
+    if ($product) {
+        $thumbnail = get_the_post_thumbnail($product->get_id(), 'thumbnail');
+        echo '<li><a href="' . get_permalink($product->get_id()) . '">' . $thumbnail . esc_html($product->get_name()) . '</a></li>';
+    }
+}
+
+function render_category($category_id) {
+    $category = get_term($category_id, 'product_cat');
+    if ($category && !is_wp_error($category)) {
+        $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
+        $image = wp_get_attachment_image($thumbnail_id, 'thumbnail');
+        echo '<li><a href="' . get_term_link($category) . '">' . $image . esc_html($category->name) . '</a></li>';
+    }
 }
